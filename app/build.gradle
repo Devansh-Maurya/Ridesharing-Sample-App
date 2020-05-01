@@ -17,11 +17,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [googleMapsKey: localProperties['apiKey']]
     }
 
     buildTypes {
         debug {
             resValue("string", "google_maps_key", localProperties['apiKey'])
+            buildConfigField("String", "GOOGLE_MAPS_KEY", "\"" + localProperties['apiKey'] + "\"")
         }
         release {
             minifyEnabled false
