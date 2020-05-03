@@ -9,7 +9,7 @@ import com.mindorks.ridesharing.simulator.WebSocketListener
 
 class NetworkService {
 
-    fun creatwWebSocket(webSocketListener: WebSocketListener): WebSocket {
+    fun createWebSocket(webSocketListener: WebSocketListener): WebSocket {
         return WebSocket(webSocketListener)
     }
 

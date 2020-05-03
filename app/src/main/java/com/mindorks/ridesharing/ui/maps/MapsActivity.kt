@@ -101,6 +101,10 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
         this.googleMap = googleMap
     }
 
+    override fun showNearbyCabs(latLngList: List<LatLng>) {
+
+    }
+
     private fun setUpLocationListener() {
         fusedLocationProviderClient = FusedLocationProviderClient(this)
         // For getting the current location update
@@ -120,6 +124,7 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
                             enableMyLocationOnMap()
                             moveCamera(currentLatLng)
                             animateCamera(currentLatLng)
+                            presenter.requestNearbyCabs(currentLatLng!!)
                         }
                     }
                 }
