@@ -44,6 +44,9 @@ class MapsPresenter(private val networkService: NetworkService): WebSocketListen
             Constants.NEARBY_CABS -> {
                 handleOnMessageNearbyCabs(jsonObject)
             }
+            Constants.CAB_BOOKED -> {
+                view?.informCabBooked()
+            }
         }
     }
 

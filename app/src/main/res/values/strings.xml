@@ -7,5 +7,6 @@
     <string name="where_to">Where To</string>
     <string name="current_location">Current location</string>
     <string name="request_cab">Request Cab</string>
+    <string name="requesting_your_cab">Requesting Your Cab</string>
 
 </resources>

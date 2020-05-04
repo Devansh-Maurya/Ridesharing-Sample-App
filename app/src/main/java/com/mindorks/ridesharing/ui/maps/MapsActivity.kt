@@ -155,6 +155,10 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
         }
     }
 
+    override fun informCabBooked() {
+
+    }
+
     private fun setUpLocationListener() {
         fusedLocationProviderClient = FusedLocationProviderClient(this)
         // For getting the current location update
@@ -217,6 +221,8 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
         }
 
         requestCabButton.setOnClickListener {
+            statusTextView.visibility = View.VISIBLE
+            statusTextView.text = getString(R.string.requesting_your_cab)
             requestCabButton.isEnabled = false
             pickUpTextView.isEnabled = false
             dropTextView.isEnabled = false
