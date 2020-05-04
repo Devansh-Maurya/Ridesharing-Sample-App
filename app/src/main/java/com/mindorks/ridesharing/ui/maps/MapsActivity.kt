@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -121,11 +122,13 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
                         PICKUP_REQUEST_CODE -> {
                             pickUpTextView.text = place.name
                             pickupLatLng = place.latLng
+                            checkAndShowRequestButton()
                         }
 
                         DROP_REQUEST_CODE -> {
                             dropTextView.text = place.name
                             dropLatLng = place.latLng
+                            checkAndShowRequestButton()
                         }
                     }
                 }
@@ -211,6 +214,20 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
 
         dropTextView.setOnClickListener {
             launchLocationAutoCompleteActivity(DROP_REQUEST_CODE)
+        }
+
+        requestCabButton.setOnClickListener {
+            requestCabButton.isEnabled = false
+            pickUpTextView.isEnabled = false
+            dropTextView.isEnabled = false
+            presenter.requestCab(pickupLatLng!!, dropLatLng!!)
+        }
+    }
+
+    private fun checkAndShowRequestButton() {
+        if ((pickupLatLng != null) and (dropLatLng != null)) {
+            requestCabButton.visibility = View.VISIBLE
+            requestCabButton.isEnabled = true
         }
     }
 
