@@ -3,5 +3,8 @@
     <string name="enable_gps">Enable GPS</string>
     <string name="required_for_this_app">Required for this app</string>
     <string name="enable_now">Enable now</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="where_to">Where To</string>
+    <string name="current_location">Current location</string>
 
 </resources>
