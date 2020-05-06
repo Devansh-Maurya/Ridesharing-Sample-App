@@ -11,5 +11,7 @@
     <string name="status_cab_booked">Your cab is booked</string>
     <string name="your_cab_is_arriving">Your cab is arriving</string>
     <string name="your_cab_has_arrived">Your cab has arrived</string>
+    <string name="you_are_on_a_trip">You are on a trip</string>
+    <string name="trip_end">Trip end</string>
 
 </resources>

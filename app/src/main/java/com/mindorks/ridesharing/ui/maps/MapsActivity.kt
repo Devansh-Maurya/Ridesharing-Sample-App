@@ -256,6 +256,19 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
         destinationMarker?.remove()
     }
 
+    override fun informTripStart() {
+        statusTextView.text = getString(R.string.you_are_on_a_trip)
+        previousLatLngFromServer = null
+    }
+
+    override fun informTripEnd() {
+        statusTextView.text = getString(R.string.trip_end)
+        grayPolyLine?.remove()
+        blackPolyLine?.remove()
+        originMarker?.remove()
+        destinationMarker?.remove()
+    }
+
     private fun setUpLocationListener() {
         fusedLocationProviderClient = FusedLocationProviderClient(this)
         // For getting the current location update
