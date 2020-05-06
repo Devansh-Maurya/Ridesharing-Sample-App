@@ -94,6 +94,7 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDetach()
+        fusedLocationProviderClient?.removeLocationUpdates(locationCallback)
     }
 
     override fun onRequestPermissionsResult(
@@ -263,10 +264,22 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
 
     override fun informTripEnd() {
         statusTextView.text = getString(R.string.trip_end)
+        nextRideButton.visibility = View.VISIBLE
         grayPolyLine?.remove()
         blackPolyLine?.remove()
         originMarker?.remove()
         destinationMarker?.remove()
+    }
+
+    override fun showRoutesNotAvailableError() {
+        val error = getString(R.string.route_not_available_choose_different_locations)
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+        reset()
+    }
+
+    override fun showDirectionApiFailedError(error: String) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show()
+        reset()
     }
 
     private fun setUpLocationListener() {
@@ -343,6 +356,43 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             dropTextView.isEnabled = false
             presenter.requestCab(pickupLatLng!!, dropLatLng!!)
         }
+
+        nextRideButton.setOnClickListener {
+            reset()
+        }
+    }
+
+    private fun reset() {
+        statusTextView.visibility = View.GONE
+        nextRideButton.visibility = View.GONE
+        nearbyCabsMarkerList.forEach {
+            it.remove()
+        }
+        nearbyCabsMarkerList.clear()
+        currentLatLngFromServer = null
+        previousLatLngFromServer = null
+        if (currentLatLng != null) {
+            moveCamera(currentLatLng)
+            animateCamera(currentLatLng)
+            setCurrentLocationAsPickup()
+            presenter.requestNearbyCabs(currentLatLng!!)
+        } else {
+            pickUpTextView.text = ""
+        }
+        pickUpTextView.isEnabled = true
+        dropTextView.isEnabled = true
+        dropTextView.text = ""
+        movingCabMarker?.remove()
+        grayPolyLine?.remove()
+        blackPolyLine?.remove()
+        originMarker?.remove()
+        destinationMarker?.remove()
+        dropLatLng = null
+        grayPolyLine = null
+        blackPolyLine = null
+        originMarker = null
+        destinationMarker = null
+        movingCabMarker = null
     }
 
     private fun checkAndShowRequestButton() {
