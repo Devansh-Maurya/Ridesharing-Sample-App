@@ -47,6 +47,18 @@ class MapsPresenter(private val networkService: NetworkService): WebSocketListen
             Constants.CAB_BOOKED -> {
                 view?.informCabBooked()
             }
+            Constants.PICKUP_PATH -> {
+                val jsonArray = jsonObject.getJSONArray("path")
+                val pickupPath = arrayListOf<LatLng>()
+
+                for (i in 0 until jsonArray.length()) {
+                    val location = jsonArray.get(i) as JSONObject
+                    val lat = location.getDouble(Constants.LAT)
+                    val lng = location.getDouble(Constants.LNG)
+                    pickupPath.add(LatLng(lat, lng))
+                }
+                view?.showPath(pickupPath)
+            }
         }
     }
 
@@ -59,12 +71,12 @@ class MapsPresenter(private val networkService: NetworkService): WebSocketListen
     }
 
     fun requestNearbyCabs(latLng: LatLng) {
-        JSONObject().apply {
+        val jsonObject = JSONObject().apply {
             put(Constants.TYPE, Constants.NEARBY_CABS)
             put(Constants.LAT, latLng.latitude)
             put(Constants.LNG, latLng.longitude)
-            webSocket.sendMessage(this.toString())
         }
+        webSocket.sendMessage(jsonObject.toString())
     }
 
     fun requestCab(pickupLatLng: LatLng, dropLatLng: LatLng) {

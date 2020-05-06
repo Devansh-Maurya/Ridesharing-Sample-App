@@ -12,4 +12,5 @@ interface MapsView {
 
     fun informCabBooked()
 
+    fun showPath(latLngList: List<LatLng>)
 }

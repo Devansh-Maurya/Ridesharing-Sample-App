@@ -9,9 +9,9 @@ class RideSharingApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Places.initialize(applicationContext, getString(R.string.google_maps_key));
+        Places.initialize(applicationContext, BuildConfig.GOOGLE_MAPS_KEY)
         Simulator.geoApiContext = GeoApiContext.Builder()
-            .apiKey(getString(R.string.google_maps_key))
+            .apiKey(BuildConfig.GOOGLE_MAPS_KEY)
             .build()
     }
 
